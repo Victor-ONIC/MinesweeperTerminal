@@ -85,13 +85,13 @@ void menu(int &row, int &col, int &d) {
 
     switch (index_game) {
         case 1:
-            game_state = BASIC;
+            game_state = Game::BASIC;
             break;
         case 2:
-            game_state = HP;
+            game_state = Game::HP;
             break;
         default:
-            game_state = BASIC;
+            game_state = Game::BASIC;
     }
 
     switch (index_size) {
@@ -154,7 +154,7 @@ void menu(int &row, int &col, int &d) {
 
 void display(int row, int col) {
 
-    if (game_state == HP) {
+    if (game_state == Game::HP) {
 
         cout << "\n";
         cout << "   -PV- " << stats.player_health << "/100";
@@ -206,7 +206,7 @@ void display(int row, int col) {
 void display(Matrix *matrix) {
 
     // barre de vie
-    if (game_state == HP) {
+    if (game_state == Game::HP) {
 
         cout << "\n";
 
@@ -259,11 +259,11 @@ void display(Matrix *matrix) {
         for (int j = 0; j < matrix->nb_column; j++) {
 
             switch (matrix->T[i][j]) {
-                case BASE:
+                case State::BASE:
                     cout << "#  ";
                     break;
 
-                case DUG:
+                case State::DUG:
                     if (matrix->M[i][j] == 0) {
                         cout << ".  ";
                     } else {
@@ -271,16 +271,16 @@ void display(Matrix *matrix) {
                     }
                     break;
 
-                case MINE:
-                    if (game_state == LOST) {
+                case State::MINE:
+                    if (game_state == Game::LOST) {
                         cout << "@  ";
                     } else {
                         cout << "#  ";
                     }
                     break;
 
-                case FLAG:
-                    if (game_state == LOST) {
+                case State::FLAG:
+                    if (game_state == Game::LOST) {
 
                         if (matrix->M[i][j] == -1) {
                             cout << "@  ";
@@ -293,7 +293,7 @@ void display(Matrix *matrix) {
                     }
                     break;
 
-                case BOOM:
+                case State::BOOM:
                     cout << "@  ";
                     break;
             }

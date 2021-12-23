@@ -4,8 +4,8 @@
 #include <ctime>
 
 
-enum Game { LOST, BASIC, HP, WON };
-enum State { BASE, DUG, MINE, FLAG, BOOM };
+enum class Game { LOST, BASIC, HP, WON };
+enum class State { BASE, DUG, MINE, FLAG, BOOM };
 
 struct Matrix {
     int nb_row;

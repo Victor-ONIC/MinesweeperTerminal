@@ -55,12 +55,12 @@ void init_mines(Matrix* matrix, int d, coord_pair p) {
 
     for (int i{}; i < d; i++) {
         int r_row{}, r_col{};
-        while (matrix->T[r_row][r_col] == MINE ||
+        while (matrix->T[r_row][r_col] == State::MINE ||
                surroundings(r_row, r_col, p)) {
             r_row = rand() % matrix->nb_row;
             r_col = rand() % matrix->nb_column;
         }
-        matrix->T[r_row][r_col] = MINE;
+        matrix->T[r_row][r_col] = State::MINE;
     }
 }
 
@@ -76,7 +76,7 @@ void mines_around(Matrix* matrix) {
     for (int i{}; i < matrix->nb_row; i++) {
         for (int j{}; j < matrix->nb_column; j++) {
 
-            if (matrix->T[i][j] == MINE) {
+            if (matrix->T[i][j] == State::MINE) {
                 matrix->M[i][j] = -1;
             } else {
                 mines_around_cell(matrix, i, j);
@@ -103,7 +103,7 @@ void mines_around_cell(Matrix *matrix, int row, int col) {
                 continue;
             }
 
-            if (matrix->T[i][j] == MINE) {
+            if (matrix->T[i][j] == State::MINE) {
                 matrix->M[row][col]++;
             }
 
@@ -153,7 +153,7 @@ Matrix *create_matrix(int row, int column) {
 void init_matrix_zero(Matrix *matrix) {
     for (int i{}; i < matrix->nb_row; i++) {
         for (int j{}; j < matrix->nb_column; j++) {
-            matrix->T[i][j] = BASE;
+            matrix->T[i][j] = State::BASE;
         }
     }
 
@@ -170,7 +170,7 @@ void dig(Matrix *matrix, coord_pair p, bool joker) {
 
     State cell = matrix->T[p.row][p.col];
 
-    if (!(cell == BASE || cell == MINE)) {
+    if (!(cell == State::BASE || cell == State::MINE)) {
         cout << "Cette case ne peut pas etre creusee.\n";
         cin.clear();
         cin.ignore();
@@ -178,25 +178,25 @@ void dig(Matrix *matrix, coord_pair p, bool joker) {
         return;
     }
 
-    if (cell == MINE) {
+    if (cell == State::MINE) {
         if (joker) {
-            matrix->T[p.row][p.col] = BOOM;
+            matrix->T[p.row][p.col] = State::BOOM;
             return;
         }
-        if (game_state == HP) {
-            matrix->T[p.row][p.col] = BOOM;
+        if (game_state == Game::HP) {
+            matrix->T[p.row][p.col] = State::BOOM;
 
             int damage_amount = damage(matrix, p);
             stats.player_health -= damage_amount;
 
             return;
         } else {
-            game_state = LOST;
+            game_state = Game::LOST;
             return;
         }
     }
 
-    matrix->T[p.row][p.col] = DUG;
+    matrix->T[p.row][p.col] = State::DUG;
     stats.discovered++;
 
     // Si la case creusée n'a pas de mines autour, alors creuser toutes 
@@ -214,7 +214,7 @@ void dig(Matrix *matrix, coord_pair p, bool joker) {
             int j = p.col - 1 + is_left;
             for (j; j <= (p.col + 1 - is_right); j++) {
                 
-                if (matrix->T[i][j] == DUG) {
+                if (matrix->T[i][j] == State::DUG) {
                     continue;
                 }
                 
@@ -264,7 +264,7 @@ void flag_down(Matrix *matrix, coord_pair p) {
 
     State cell = matrix->T[p.row][p.col];
 
-    if (!(cell == BASE || cell == MINE)) {
+    if (!(cell == State::BASE || cell == State::MINE)) {
         cout << "Vous ne pouvez pas poser de drapeau ici.\n";
         cin.clear();
         cin.ignore();
@@ -272,7 +272,7 @@ void flag_down(Matrix *matrix, coord_pair p) {
         return;
     }
 
-    matrix->T[p.row][p.col] = FLAG;
+    matrix->T[p.row][p.col] = State::FLAG;
 }
 
 void flag_up(Matrix *matrix, coord_pair p) {
@@ -281,7 +281,7 @@ void flag_up(Matrix *matrix, coord_pair p) {
 
     State cell = matrix->T[p.row][p.col];
 
-    if (cell != FLAG) {
+    if (cell != State::FLAG) {
         cout << "Il n'y a pas de drapeau ici.\n";
         cin.clear();
         cin.ignore();
@@ -289,7 +289,7 @@ void flag_up(Matrix *matrix, coord_pair p) {
         return;
     }
 
-    matrix->T[p.row][p.col] = BASE;
+    matrix->T[p.row][p.col] = State::BASE;
 }
 
 int score(int t) {

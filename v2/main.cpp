@@ -15,7 +15,7 @@ int main() {
     
     unsigned int timer_start = time(NULL);
 
-    while (game_state == BASIC || game_state == HP) {
+    while (game_state == Game::BASIC || game_state == Game::HP) {
 
         func_clear();
         display(Game);
@@ -50,18 +50,19 @@ int main() {
 
         int required = Game->nb_row * Game->nb_column - difficulty;
         if (stats.discovered == required) {
-            game_state = WON;
+            game_state = Game::WON;
         }
 
         if (stats.player_health < 1) {
-            game_state = LOST;
+            game_state = Game::LOST;
         }
+
     }
 
     unsigned int timer_end = time(NULL);
     int game_time = timer_end - timer_start;
 
-    if (game_state == WON) {
+    if (game_state == Game::WON) {
 
         func_clear();
         display(Game);
@@ -70,7 +71,7 @@ int main() {
         std::cout << "Temps: " << game_time << "\n";
         std::cout << "Score: " << score(game_time) << "\n";
 
-    } else if (game_state == LOST) {
+    } else if (game_state == Game::LOST) {
 
         func_clear();
         display(Game);
