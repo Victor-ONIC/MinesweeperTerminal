@@ -115,12 +115,12 @@ void matrix_destructor(Matrix *matrix) {
     for (int s{}; s < matrix->nb_row; s++) {
         delete[] matrix->T[s];
     }
-    delete matrix->T;
+    delete[] matrix->T;
 
     for (int s{}; s < matrix->nb_row; s++) {
         delete[] matrix->M[s];
     }
-    delete matrix->M;
+    delete[] matrix->M;
     
     delete matrix;
 }
