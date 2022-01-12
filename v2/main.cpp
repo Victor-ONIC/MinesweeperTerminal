@@ -7,9 +7,9 @@ player_stats stats{0, 0, 100};
 
 int main() {
 
-    int action{};
+    int action = 0;
     coord_pair where{};
-    int difficulty{};
+    int difficulty = 0;
 
     Matrix *Game = init_game(difficulty);
     
