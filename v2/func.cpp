@@ -18,7 +18,7 @@ extern player_stats stats;
 
 
 Matrix *init_game(int &difficulty) {
-    int row{}, col{}, d{};
+    int row = 0, col = 0, d = 0;
 
     // afficher la bannière.
     display_banner();
