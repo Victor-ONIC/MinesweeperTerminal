@@ -434,7 +434,7 @@ void rules() {
     );
     rulebook.push_back(
         "Differents symboles du jeu:\n"
-        "<.> : une case creuee, sans mines autour.\n"
+        "<.> : une case creusee, sans mines autour.\n"
         "<1> a <8> : une case creusee, avec le nombre de mines autour.\n"
         "<#> : une case qui n'a pas encore ete creusee.\n"
         "<P> : une case avec un drapeau.\n"
